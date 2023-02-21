@@ -9,6 +9,8 @@ Reference: Patrick God
 */
 
 
+using JwtWebApi.Services;
+using JwtWebApi.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -22,6 +24,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddHttpContextAccessor();  
 
 //Configure swagger to add a button to add token authorization
 builder.Services.AddSwaggerGen(options =>

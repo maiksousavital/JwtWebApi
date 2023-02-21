@@ -1,5 +1,7 @@
 ﻿using JwtWebApi.Dto;
 using JwtWebApi.Model;
+using JwtWebApi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -14,14 +16,28 @@ namespace JwtWebApi.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        public AuthController(IConfiguration configuration)
+        private readonly IUserService _userService;
+        public static User user = new User();
+        public AuthController(IConfiguration configuration, IUserService userService)
         {
             _configuration = configuration;
+            _userService = userService;
         }
-        //use repository with authenticatrion service
 
-        public static User user = new User();
-               
+        //Tip: use repository with authenticatrion service
+
+        [HttpPost, Authorize]
+        public ActionResult<string> GetUser()
+        {
+            var name = _userService.GetName();
+            return Ok(name);
+
+            //var userName = User?.Identity?.Name;
+            //var userName2 = User.FindFirstValue(ClaimTypes.Name);
+            //var role = User.FindFirstValue(ClaimTypes.Role);
+            //return Ok(new { userName, userName2, role });
+        }
+
 
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDto request)
