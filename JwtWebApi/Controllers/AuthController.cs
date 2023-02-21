@@ -20,7 +20,8 @@ namespace JwtWebApi.Controllers
         }
         //use repository with authenticatrion service
 
-        public static User user = new User();       
+        public static User user = new User();
+               
 
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDto request)
