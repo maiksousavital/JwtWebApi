@@ -26,7 +26,7 @@ namespace JwtWebApi.Controllers
 
         //Tip: use repository with authenticatrion service
 
-        [HttpPost, Authorize]
+        [HttpGet, Authorize]
         public ActionResult<string> GetUser()
         {
             var name = _userService.GetName();
